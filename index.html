@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artpark Interface</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="data_form">
+        <form>
+            <div>
+                <p>Please Select Language </p>
+                <select id="parent_select" name="Language">
+                    <option value="">----</option>
+                </select>
+                <br> <br>
+            
+                <p> Please Select Dialect</p>
+                <select id="child_select" name="Dialect">
+                    <option value="">----</option>
+                </select>
+            </div>
+
+        <div>
+            <p>Please select data type:</p>
+            <select id="data-type" onchange="toggleDropdowns()" name="Data Type">
+                <option value="No Entry">----</option>
+              <option value="Audio">Audio</option>
+              <option value="Text">Text</option>
+              <option value="Audio & Text">Audio & Text</option>
+            </select>
+          </div>
+          
+          <div id="gender-group" style="display: none;">
+            <p>Please select gender:</p>
+            <select id="gender" name="Gender">
+                <option value="No Entry">----</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Both">Both</option>
+            </select>
+          </div>
+          
+            <div id="age-group" style="display: none;">
+            <p>Please select age group:</p>
+            <select id="age" name="Age Group">
+                <option value="No Entry">----</option>
+                <option value="10-20">10 - 20</option>
+                <option value="20-50">20 - 50</option>
+                <option value="above-50">Above 50</option>                
+                <option value="All Age">All Age Groups</option>
+            </select>
+            </div>
+            <br>
+            
+            <input type="checkbox" id="popup-trigger"><label for="Consent"> CONSET FORM</label><br>
+        
+            <div id="popup" class="popup">
+                <div class="popup-content">
+                    <span class="close" onclick="closePopup()">&times;</span>
+                    <h2>Please provide your details:</h2>
+                    <form>
+                        <label for="name">Name:</label><input type="text" id="Name" name="Name" required><br><br>
+                        <label for="email">Email:</label><input type="email" id="Email" name="Email" required><br><br>
+                        <label for="country">Country:</label><input type="text" id="Country" name="Country"><br><br>
+                        <label for="company">Company / Organisation / Institution:</label><input type="text" id="Company" name="Company"><br><br>
+                        <button type="submit" id="submit">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </form>
+
+
+
+    </div>
+<script language="javascript" type="text/javascript">  
+
+
+/*
+        var mList = {
+            Hindi : ['Apple iPhone', 'Samsung Galaxy', 'Realme', 'Huawei', 'OnePlus', 'Asus ROG', 'Xiaomi', 'Vivo'],   
+            Bengali : [ 'Dialect1', 'Dialect2', 'Dialect3', 'Dialect4', 'Dialect5' ],
+            Marathi : ['Black Raspberry', 'Frozen pudding', 'Neapolitan', 'Strawberry', 'Vanilla', 'Chokecherry', 'Frozen yogurt', 'Booza', 'Frozen yogurt', 'Ice milk'],
+            Telugu : ['Broccoli', 'Cabbage', 'Carrot', 'Cauliflower'],
+            Bhojpuri : [ 'Dialect1', 'Dialect2', 'Dialect3', 'Dialect4', 'Dialect5' ],
+            Kannada : ['Bournville', 'Snickers', 'Twix', 'Ferrero Rocher', 'Dark Chocolate', 'Milk chocolate', 'White chocolate', 'Gianduja chocolate'],
+            Magadhi : [ 'Dialect1', 'Dialect2', 'Dialect3', 'Dialect4', 'Dialect5' ],
+            Chhatisgarhi : [ 'Dialect1', 'Dialect2', 'Dialect3', 'Dialect4', 'Dialect5' ],
+            Maithili : [ 'Dialect1', 'Dialect2', 'Dialect3', 'Dialect4', 'Dialect5' ],
+        };
+
+
+        el_parent = document.getElementById("parent_select");
+        el_child = document.getElementById("child_select");
+
+        for (key in mList) {
+            el_parent.innerHTML = el_parent.innerHTML + '<option>'+ key +'</option>';
+        }
+
+        el_parent.addEventListener('change', function populate_child(e){
+            el_child.innerHTML = '';
+            itm = e.target.value;
+            if(itm in mList){
+                    for (i = 0; i < mList[itm].length; i++) {
+                        el_child.innerHTML = el_child.innerHTML + '<option>'+ mList[itm][i] +'</option>';
+                    }
+            }
+        }); */
+var mList = {
+        Hindi : ['Hindustani Malvi', 'Kanauji Braj', 'Awadhi Bundeli', 'Marwari Dhudhari', 'Garhwali Tehri', 'All Dialects' ],   
+        Bengali : [ 'Western Bengali', 'Varendri/Northern Bengali', 'Standard Colloquial Bangla', 'Jharkhandi', 'Rajbangshi', 'All Dialects' ],
+        Marathi : [ 'Southern Konkan', 'Northern Konkan', 'Standard Marathi', 'Varhadi' ,'All Dialects' ],
+        Telugu : [ 'Central Telugu', 'Southern Telugu', 'Telangana', 'Utterandhra' , 'All Dialects' ],
+        Bhojpuri : ['Northern Bhojpuri', 'Western Bhojpuri', 'Southern Standard Bhojpuri', 'All Dialects'  ],
+        Kannada : [ 'Central Kannada', 'Coastal Kannada', 'Dharwad Kannada', 'Northeastern', 'Mysore Kannada' , 'All Dialects' ],
+        Magadhi : [ 'Standard Magahi', 'Southern Magahi', 'Western Magahi', 'Surajpuri' , 'All Dialects' ],
+        Chhattisgarhi : [ 'Eastern Chhattisgarhi', 'Central Chhattisgarhi', 'Western Chhattisgarhi', 'Northern Chhattisgarhi' , 'All Dialects' ],
+        Maithili : [ 'Bajjika', 'Eastern Maithili/Thethi', 'Southern Maithili', 'Angika' , 'All Dialects'  ],
+        All : [ 'All Dialects']
+    };
+
+    el_parent = document.getElementById("parent_select");
+    el_child = document.getElementById("child_select");
+
+    for (key in mList) {
+        el_parent.innerHTML = el_parent.innerHTML + '<option value="'+key+'">'+ key +'</option>';
+    }
+
+    el_parent.addEventListener('change', function populate_child(e){
+        el_child.innerHTML = '';
+        var itm = e.target.value;
+        if(itm in mList){
+            for (i = 0; i < mList[itm].length; i++) {
+                el_child.innerHTML = el_child.innerHTML + '<option value="'+mList[itm][i]+'">'+ mList[itm][i] +'</option>';
+            }
+        }
+    });
+
+    function toggleDropdowns() {
+            var dataType = document.getElementById("data-type").value;
+            var genderGroup = document.getElementById("gender-group");
+            var ageGroup = document.getElementById("age-group");
+        
+            if (dataType === "Text") {
+            genderGroup.style.display = "none";
+            ageGroup.style.display = "none";
+            } else {
+            genderGroup.style.display = "block";
+            ageGroup.style.display = "block";
+            }
+            };
+
+        var popupTrigger = document.getElementById("popup-trigger");
+		var popup = document.getElementById("popup");
+		popupTrigger.addEventListener("click", function() {
+			if (popupTrigger.checked) {
+				popup.style.display = "block";
+			} else {
+				popup.style.display = "none";
+			}
+		});
+
+		function closePopup() {
+			popupTrigger.checked = false;
+			popup.style.display = "none";
+		};
+
+</script>
+</body>
+</html>
